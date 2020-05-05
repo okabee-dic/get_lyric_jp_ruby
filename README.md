@@ -6,7 +6,7 @@ getlyric.rb gets japanese lyrics from utamap.com or kget.jp and show.
 
 ## Description
 getlyric.rb gets japanese lyrics.  
-in default, getlyric.rb gets from utamap.co.jp.  
+in default, getlyric.rb gets from utamap.com.  
 when -k option is set, gets from kget.jp.  
 kget.jp has more lyrics of japanese songs, but slower than utamap.com.  
 
