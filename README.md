@@ -8,18 +8,18 @@ getlyric.rb gets japanese lyrics from utamap.co.jp or kget.jp and show.
 getlyric.rb gets japanese lyrics.
 in default, getlyric.rb gets from utamap.co.jp.
 when -k option is set, gets from kget.jp.
-kget.jp has more lyrics of japanese songs, but slower than utamap.co.jp.
+kget.jp has more lyrics of japanese songs, but slower than utamap.co.jp.  
 
 ## Demo
 
 ## Requirement
-Typhoeus
+Typhoeus  
 Nokogiri
 
 ## Usage
-ruby getlyric.rb [-k] <artistname> <songname>
-ruby getlyric.rb [-k] -t <songname> [<artistname>]
-ruby getlyric.rb [-k] -l <artistname>
+ruby getlyric.rb [-k] <artistname> <songname>  
+ruby getlyric.rb [-k] -t <songname> [<artistname>]  
+ruby getlyric.rb [-k] -l <artistname>  
 
 ## Install
 bundle install
