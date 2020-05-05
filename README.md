@@ -17,9 +17,9 @@ Typhoeus
 Nokogiri
 
 ## Usage
-ruby getlyric.rb [-k] <artistname> <songname>  
-ruby getlyric.rb [-k] -t <songname> [<artistname>]  
-ruby getlyric.rb [-k] -l <artistname>  
+ruby getlyric.rb [-k] &lt;artistname&gt; &lt;songname&gt;  
+ruby getlyric.rb [-k] -t &lt;songname&gt; [&lt;artistname&gt;]  
+ruby getlyric.rb [-k] -l &lt;artistname&gt;  
 
 ## Install
 bundle install
