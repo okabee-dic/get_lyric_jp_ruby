@@ -9,6 +9,7 @@ getlyric.rb gets japanese lyrics.
 in default, getlyric.rb gets from utamap.com.  
 when -k option is set, gets from kget.jp.  
 kget.jp has more lyrics of japanese songs, but slower than utamap.com.  
+-f option will write lyrics down to the file &lt;artist&gt; - &lt;title&gt;.txt on the current directory.  
 
 ## Demo
 
@@ -17,8 +18,8 @@ Typhoeus
 Nokogiri
 
 ## Usage
-ruby getlyric.rb [-k] &lt;artistname&gt; &lt;songname&gt;  
-ruby getlyric.rb [-k] -t &lt;songname&gt; [&lt;artistname&gt;]  
+ruby getlyric.rb [-k] [-f] &lt;artistname&gt; &lt;songname&gt;  
+ruby getlyric.rb [-k] [-f] -t &lt;songname&gt; [&lt;artistname&gt;]  
 ruby getlyric.rb [-k] -l &lt;artistname&gt;  
 
 ## Install

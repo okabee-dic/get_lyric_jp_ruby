@@ -217,15 +217,32 @@ def lyric_output(song, site)
   end
 end
 
-def write_lyric(word1, word2, option, site)
+def lyric_fileout(song, site)
+  File.open("#{song[:singer]} - #{song[:name]}.txt", "w") do |f|
+    f.puts "#{song[:name]}"
+    f.puts "アーティスト: #{song[:singer]}"
+    f.puts "作詞: #{song[:lyric]}"
+	  f.puts "作曲: #{song[:write]}"
+
+	  # write lyric
+	  if site == :utamap
+      f.puts get_lyric_utamap(song[:song_id])
+    elsif site == :kget
+  	  f.puts get_lyric_kget(song[:song_id])
+    end 
+  end
+end
+
+def write_lyric(word1, word2, target, options)
+	site = options[:site]
 	if site == :utamap
 	  word_encode = URI.encode_www_form(word: word1.encode("Shift_JIS"))
-	  list = get_songlist_utamap(word_encode, option)[:list]
+	  list = get_songlist_utamap(word_encode, target)[:list]
 	elsif site == :kget
-		if option == "artist"
+		if target == "artist"
 			r = word1
 			t = word2
-		elsif option == "title"
+		elsif target == "title"
 			r = word2
 			t = word1
 		end
@@ -237,23 +254,32 @@ def write_lyric(word1, word2, option, site)
 		# download the first data when word2 is unavailable
 		unless list.empty?
 		  song = list[0]
-		  lyric_output(song, site)
+		  if options[:fileout]
+        lyric_fileout(song, site)
+      else
+    	  lyric_output(song, site)
+    	end
 		end
 	else
     list.each do |song|
     	# select search target
-      if option == "artist"
-      	target = song[:name]
-      elsif option == "title"
-      	target = song[:singer]
+      if target == "artist"
+      	str = song[:name]
+      elsif target == "title"
+      	str = song[:singer]
       else
-      	target = nil
+      	str = nil
       end
 
       # search strings
-      if target 
-        if target.match(/#{word2}/i)
-    	    lyric_output(song, site)
+      if str 
+        if str.match(/#{word2}/i)
+        	if options[:fileout]
+        		lyric_fileout(song, site)
+        	else
+    	      lyric_output(song, site)
+    	    end
+
     	    break
         end
       end
@@ -281,13 +307,14 @@ end
 def show_usage()
 	puts "getlyric.rb version 1.1"
 	puts "copyright(C) 2020 okabee-dic\n"
-  puts "usage: ruby getlyric.rb [-k] [-l <artistname>] <artistname> <songname>\n"
-  puts "    or ruby getlyric.rb [-k] -t [-l <songname>] <songname> <artistname>"
+  puts "usage: ruby getlyric.rb [-k] [-f] [-l <artistname>] <artistname> <songname>\n"
+  puts "    or ruby getlyric.rb [-k] [-f] -t [-l <songname>] <songname> <artistname>"
 
   puts "\n[options]"
   puts "-l : get song list from artist name."
   puts "-t : search songs from song name."
   puts "-k : get lyrics from kget.jp"
+  puts "-f : write lyrics to the current directory, filename is <artist> - <title>"
 end
 
 # main routine
@@ -317,6 +344,8 @@ for i in 0..(ARGC-1) do
       when "u" then
       	# use www.utamap.com
       	options[:site] = :utamap
+      when "f" then
+      	options[:fileout] = true
     end
 
   # or set artist or title
@@ -351,5 +380,5 @@ if options[:list]
 	write_songlist(artist, target, options[:site])
 else
 	# show lyric
-  write_lyric(artist, title, target, options[:site])
+  write_lyric(artist, title, target, options)
 end
